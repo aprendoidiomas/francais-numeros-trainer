@@ -1,0 +1,33 @@
+<!DOCTYPE html><html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Français Numéros – Trainer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; background:#f7f7f7; text-align:center; padding:20px; }
+    button { padding:10px 18px; margin:5px; font-size:16px; cursor:pointer; }
+    input { padding:8px; margin-top:10px; font-size:16px; }
+  </style>
+</head>
+<body>
+  <h2>🎯 Français Numéros – Trainer (70–100)</h2>
+  <p>🧠 Escucha y escribe el número correcto</p>
+  <h3>Puntaje: <span id="score">0</span></h3>
+  <button id="playBtn">▶️ Escuchar número</button>
+  <button id="repeatBtn">🔁 Repetir</button>
+  <div>
+    <input type="number" id="answer" placeholder="Escribe el número">
+    <button id="checkBtn">Comprobar ✅</button>
+  </div>
+  <p id="feedback"></p>
+<script>
+const numbers = [
+  { number: 70, word: "soixante-dix" },{ number: 71, word: "soixante et onze" },{ number: 72, word: "soixante-douze" },{ number: 73, word: "soixante-treize" },{ number: 74, word: "soixante-quatorze" },{ number: 75, word: "soixante-quinze" },{ number: 76, word: "soixante-seize" },{ number: 77, word: "soixante-dix-sept" },{ number: 78, word: "soixante-dix-huit" },{ number: 79, word: "soixante-dix-neuf" },{ number: 80, word: "quatre-vingts" },{ number: 81, word: "quatre-vingt-un" },{ number: 82, word: "quatre-vingt-deux" },{ number: 83, word: "quatre-vingt-trois" },{ number: 84, word: "quatre-vingt-quatre" },{ number: 85, word: "quatre-vingt-cinq" },{ number: 86, word: "quatre-vingt-six" },{ number: 87, word: "quatre-vingt-sept" },{ number: 88, word: "quatre-vingt-huit" },{ number: 89, word: "quatre-vingt-neuf" },{ number: 90, word: "quatre-vingt-dix" },{ number: 91, word: "quatre-vingt-onze" },{ number: 92, word: "quatre-vingt-douze" },{ number: 93, word: "quatre-vingt-treize" },{ number: 94, word: "quatre-vingt-quatorze" },{ number: 95, word: "quatre-vingt-quinze" },{ number: 96, word: "quatre-vingt-seize" },{ number: 97, word: "quatre-vingt-dix-sept" },{ number: 98, word: "quatre-vingt-dix-huit" },{ number: 99, word: "quatre-vingt-dix-neuf" },{ number: 100, word: "cent" }
+];let current=null; let score=0; let synth = window.speechSynthesis;
+
+function speak(text){ if(!text) return; synth.cancel(); let u=new SpeechSynthesisUtterance(text); u.lang="fr-FR"; synth.speak(u);} function playNumber(){ current=numbers[Math.floor(Math.random()*numbers.length)]; document.getElementById("feedback").textContent=""; document.getElementById("answer").value=""; setTimeout(()=>speak(current.word),200);} function checkAnswer(){ let user=parseInt(document.getElementById("answer").value); if(!current) return; if(user===current.number){score++; document.getElementById("feedback").textContent="✅ Correcto";} else {document.getElementById("feedback").textContent="❌ Era: "+current.number;} document.getElementById("score").textContent=score; playNumber();}
+
+document.addEventListener("click",()=>synth.resume()); document.getElementById("playBtn").addEventListener("click",playNumber); document.getElementById("repeatBtn").addEventListener("click",()=>current&&speak(current.word)); document.getElementById("checkBtn").addEventListener("click",checkAnswer); </script>
+
+</body>
+</html>
